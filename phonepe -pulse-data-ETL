@@ -1,0 +1,274 @@
+#Once created the clone of GIT-HUB repository then,
+#Required libraries for the program
+#1.aggregated --- transcation
+import pandas as pd
+import json
+import os
+
+#This is to direct the path to get the data as states
+
+path="/content/pulse/data/aggregated/transaction/country/india/state/"
+Agg_state_list=os.listdir(path)
+Agg_state_list
+#Agg_state_list--> to get the list of states in India
+
+#<------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>#
+
+#This is to extract the data's to create a dataframe
+
+clm={'State':[], 'Year':[],'Quater':[],'Transacion_type':[], 'Transacion_count':[], 'Transacion_amount':[]}
+for i in Agg_state_list:
+    p_i=path+i+"/"
+    Agg_yr=os.listdir(p_i)
+    for j in Agg_yr:
+        p_j=p_i+j+"/"
+        Agg_yr_list=os.listdir(p_j)
+        for k in Agg_yr_list:
+            p_k=p_j+k
+            Data=open(p_k,'r')
+            D=json.load(Data)
+            for z in D['data']['transactionData']:
+              Name=z['name']
+              count=z['paymentInstruments'][0]['count']
+              amount=z['paymentInstruments'][0]['amount']
+              clm['Transacion_type'].append(Name)
+              clm['Transacion_count'].append(count)
+              clm['Transacion_amount'].append(amount)
+              clm['State'].append(i)
+              clm['Year'].append(j)
+              clm['Quater'].append(int(k.strip('.json')))
+#Succesfully created a dataframe
+Agg_Trans=pd.DataFrame(clm)
+
+#Agg_Trans
+
+
+#Once created the clone of GIT-HUB repository then,
+#Required libraries for the program
+#2.aggregated --- user
+import pandas as pd
+import json
+import os
+
+#This is to direct the path to get the data as states
+
+path1="/content/pulse/data/aggregated/user/country/india/state/"
+Agg_state_user_list = os.listdir(path1)
+Agg_state_user_list
+#Agg_state_user_list--> to get the list of states in India
+
+#<------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>#
+
+#This is to extract the data's to create a dataframe
+
+clm1={'State':[], 'Year':[],'Quater':[],'Brands':[],'User_count':[],'User_Percentage':[]}
+for i in Agg_state_user_list:
+    p_i=path1+i+"/"
+    Agg_yr=os.listdir(p_i)
+    for j in Agg_yr:
+        p_j=p_i+j+"/"
+        Agg_yr_list=os.listdir(p_j)
+        for k in Agg_yr_list:
+            p_k=p_j+k
+            Data=open(p_k,'r')
+            D=json.load(Data)
+            try:
+              for z in D["data"]["usersByDevice"]:
+                brand=z['brand']
+                count=z['count']
+                percentage=z['percentage']
+                clm1['Brands'].append(brand)
+                clm1['User_count'].append(count)
+                clm1['User_Percentage'].append(percentage*100)
+                clm1['State'].append(i)
+                clm1['Year'].append(j)
+                clm1['Quater'].append(int(k.strip('.json')))
+            except:
+              pass
+
+#Succesfully created a dataframe
+Agg_Users=pd.DataFrame(clm1)
+
+
+#Agg_Users
+
+
+#Once created the clone of GIT-HUB repository then,
+#Required libraries for the program
+#3.map---transaction
+import pandas as pd
+import json
+import os
+
+#This is to direct the path to get the data as states
+
+path3="/content/pulse/data/map/transaction/hover/country/india/state/"
+Map_state_list=os.listdir(path3)
+Map_state_list
+#Map_state_list--> to get the list of states in India
+
+#<------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>#
+
+#This is to extract the data's to create a dataframe
+
+clm3={'State':[], 'Year':[],'Quater':[],'Transacion_type':[], 'Transacion_count':[], 'Transacion_amount':[]}
+for i in Map_state_list:
+    p_i=path3+i+"/"
+    Map_yr=os.listdir(p_i)
+    for j in Map_yr:
+        p_j=p_i+j+"/"
+        Map_yr_list=os.listdir(p_j)
+        for k in Map_yr_list:
+            p_k=p_j+k
+            Data=open(p_k,'r')
+            D=json.load(Data)
+            for z in D['data']['hoverDataList']:
+              Name=z['name']
+              count=z['metric'][0]['count']
+              amount=z['metric'][0]['amount']
+              clm3['Transacion_type'].append(Name)
+              clm3['Transacion_count'].append(count)
+              clm3['Transacion_amount'].append(amount)
+              clm3['State'].append(i)
+              clm3['Year'].append(j)
+              clm3['Quater'].append(int(k.strip('.json')))
+#Succesfully created a dataframe
+Map_Trans=pd.DataFrame(clm3)
+
+
+#Map_Trans
+
+
+#Once created the clone of GIT-HUB repository then,
+#Required libraries for the program
+#4.map---user
+import pandas as pd
+import json
+import os
+
+#This is to direct the path to get the data as states
+
+path4="/content/pulse/data/map/user/hover/country/india/state/"
+Map_state_list=os.listdir(path4)
+Map_state_list
+#Map_state_list--> to get the list of states in India
+
+#<------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>#
+
+#This is to extract the data's to create a dataframe
+
+clm4={'State':[], 'Year':[],'Quater':[],'District':[], 'Registered_User':[]}
+for i in Map_state_list:
+    p_i=path4+i+"/"
+    Map_yr=os.listdir(p_i)
+    for j in Map_yr:
+        p_j=p_i+ j+"/"
+        Map_yr_list=os.listdir(p_j)
+        for k in Map_yr_list:
+            p_k=p_j+k
+            Data=open(p_k,'r')
+            D=json.load(Data)
+            for z in D["data"]["hoverData"].items():
+              district =z[0]
+              registereduser=z[1]['registeredUsers']
+              clm4['District'].append(district)
+              clm4['Registered_User'].append(registereduser)
+              clm4['State'].append(i)
+              clm4['Year'].append(j)
+              clm4['Quater'].append(int(k.strip('.json')))
+#Succesfully created a dataframe
+Map_Users=pd.DataFrame(clm4)
+
+
+#Map_Users
+
+
+#Once created the clone of GIT-HUB repository then,
+#Required libraries for the program
+#5.top---transaction
+import pandas as pd
+import json
+import os
+
+#This is to direct the path to get the data as states
+
+path4="/content/pulse/data/top/transaction/country/india/state/"
+Aggt_state_list=os.listdir(path4)
+Aggt_state_list
+#Aggt_state_list--> to get the list of states in India
+
+#<------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>#
+
+#This is to extract the data's to create a dataframe
+
+clm4={'State':[], 'Year':[],'Quater':[],'Transacion_districts':[], 'Transacion_count':[], 'Transacion_amount':[]}
+for i in Aggt_state_list:
+    p_i=path4+i+"/"
+    Agg_yr=os.listdir(p_i)
+    for j in Agg_yr:
+        p_j=p_i+j+"/"
+        Agg_yr_list=os.listdir(p_j)
+        for k in Agg_yr_list:
+            p_k=p_j+k
+            Data=open(p_k,'r')
+            D=json.load(Data)
+            for z in D['data']['districts']:
+              Name=z['entityName']
+              count=z['metric']['count']
+              amount=z['metric']['amount']
+              clm4['Transacion_districts'].append(Name)
+              clm4['Transacion_count'].append(count)
+              clm4['Transacion_amount'].append(amount)
+              clm4['State'].append(i)
+              clm4['Year'].append(j)
+              clm4['Quater'].append(int(k.strip('.json')))
+#Succesfully created a dataframe
+Top_Trans=pd.DataFrame(clm4)
+
+
+#Once created the clone of GIT-HUB repository then,
+#Required libraries for the program
+#6.top---user
+import pandas as pd
+import json
+import os
+
+#This is to direct the path to get the data as states
+
+path4="/content/pulse/data/top/transaction/country/india/state/"
+Aggt_state_list=os.listdir(path4)
+Aggt_state_list
+#Aggt_state_list--> to get the list of states in India
+
+#<------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>#
+
+#This is to extract the data's to create a dataframe
+
+clm4={'State':[], 'Year':[],'Quater':[],'Transacion_districts':[], 'Transacion_count':[], 'Transacion_amount':[]}
+for i in Aggt_state_list:
+    p_i=path4+i+"/"
+    Agg_yr=os.listdir(p_i)
+    for j in Agg_yr:
+        p_j=p_i+j+"/"
+        Agg_yr_list=os.listdir(p_j)
+        for k in Agg_yr_list:
+            p_k=p_j+k
+            Data=open(p_k,'r')
+            D=json.load(Data)
+            for z in D['data']['districts']:
+              Name=z['entityName']
+              count=z['metric']['count']
+              amount=z['metric']['amount']
+              clm4['Transacion_districts'].append(Name)
+              clm4['Transacion_count'].append(count)
+              clm4['Transacion_amount'].append(amount)
+              clm4['State'].append(i)
+              clm4['Year'].append(j)
+              clm4['Quater'].append(int(k.strip('.json')))
+#Succesfully created a dataframe
+Top_Users=pd.DataFrame(clm4)
+
+
+#Top_Usersa
+
+
